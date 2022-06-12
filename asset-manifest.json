@@ -1,0 +1,19 @@
+{
+  "files": {
+    "main.css": "/windivo/static/css/main.8bbc74ae.css",
+    "main.js": "/windivo/static/js/main.3bff7aff.js",
+    "static/media/mist.jpg": "/windivo/static/media/mist.c023eb997833f01dec36.jpg",
+    "static/media/rain.jpg": "/windivo/static/media/rain.78de501afa2c8dbbb2b8.jpg",
+    "static/media/snow.jpg": "/windivo/static/media/snow.bc95a5c2fd71d2ade23f.jpg",
+    "static/media/cloud.jpg": "/windivo/static/media/cloud.0a6898cfc6b996cfa31d.jpg",
+    "static/media/thunderstorm.jpg": "/windivo/static/media/thunderstorm.c3c6383fedb7b182ea27.jpg",
+    "static/media/clear.jpg": "/windivo/static/media/clear.4102818d8b480546ba83.jpg",
+    "index.html": "/windivo/index.html",
+    "main.8bbc74ae.css.map": "/windivo/static/css/main.8bbc74ae.css.map",
+    "main.3bff7aff.js.map": "/windivo/static/js/main.3bff7aff.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.8bbc74ae.css",
+    "static/js/main.3bff7aff.js"
+  ]
+}
