@@ -1,23 +1,41 @@
-import logo from './logo.svg';
 import './App.css';
+import { useEffect, useState } from 'react';
+import ContentInfo from './Components/ContentInfo/ContentInfo';
+import Sidebar from './Components/Sidebar/Sidebar';
+import { getUserLocation, weatherAPI } from './Api/api.js'
+import { changeBackground } from './BackgroundChange.js';
 
 function App() {
+
+  const [location, setLocation] = useState()
+  const [weather, setWeather] = useState({})
+  const [forecast, setForecast] = useState([])
+
+  useEffect(() => {
+    getUserLocation().then(res => { 
+      setLocation(res) 
+    })
+  }, [])
+
+  useEffect(() => {
+    if(location) {
+      weatherAPI.getCurData(location.lat, location.lon).then(res => {
+        setWeather(res)
+        console.log(res.data.weather[0].id)
+        changeBackground(res.data.weather[0].id)
+      })
+      weatherAPI.getForecast(location.lat, location.lon).then(res => {
+        setForecast(res)
+      })
+    }
+  }, [location])
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className='app-wrapper'>
+        <Sidebar location={location} data={weather.data}/>
+        <ContentInfo setLocation={setLocation} data={weather.data} forecast={forecast}/>
+      </div>
     </div>
   );
 }
