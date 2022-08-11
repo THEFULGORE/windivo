@@ -1,65 +1,64 @@
-import { AutoComplete, Input } from 'antd';
-import React, { useEffect, useState } from 'react'
+import { AutoComplete } from 'antd';
+import React, { useEffect, useState } from 'react';
 import flag from 'country-code-emoji';
 import { geoAPI } from '../../../Api/api';
 const { Option } = AutoComplete;
 
 const SearchBar = (props) => {
-    const [inputText, setInputText] = useState('');
-    const [options, setOptions] = useState([]);
+	const [inputText, setInputText] = useState('');
+	const [options, setOptions] = useState([]);
 
-    useEffect(() => {
-        const getData = () => {
-            geoAPI.getLocByName(inputText).then(res => res[0].value ? setOptions(res) : setOptions([]))
-        }
+	useEffect(() => {
+		const getData = () => {
+			geoAPI
+				.getLocByName(inputText)
+				.then((res) => (res[0].value ? setOptions(res) : setOptions([])));
+		};
 
-        let timer = setTimeout(() => {
+		let timer = setTimeout(() => {
+			if (inputText) getData();
+		}, 2000);
 
-            if (inputText)
-                getData()
+		return () => clearTimeout(timer);
+	}, [inputText]);
 
-        }, 2000)
+	const onSelect = (value, option) => {
+		props.setLocation(options[option.key]);
+		setInputText('');
+	};
 
-        return () => clearTimeout(timer)
-    }, [inputText])
+	const onChange = (e) => {
+		setInputText(e);
+	};
 
-    const onSelect = (value, option) => {
-        props.setLocation(options[option.key])
-        setInputText('');
-    };
+	const test = (el) => {
+		console.log(el);
+	};
 
-    const onChange = (e) => {
-        setInputText(e)
-    };
+	return (
+		<>
+			<AutoComplete
+				style={{
+					width: 250,
+					borderRadius: '1rem',
+					marginTop: '.5rem',
+				}}
+				placeholder="Another location"
+				value={inputText}
+				onSelect={onSelect}
+				onChange={onChange}
+			>
+				{options.map((el) => (
+					<Option key={el.key}>
+						{el.value}
+						{flag(el.country)}
+					</Option>
+				))}
+			</AutoComplete>
+			<br />
+			<br />
+		</>
+	);
+};
 
-    const test = (el) => {
-        console.log(el)
-    }
-
-    return (
-        <>
-            <AutoComplete
-                style={{
-                    width: 250,
-                    borderRadius: '1rem',
-                    marginTop: '.5rem'
-                }}
-                placeholder="Another location"
-                value={inputText}
-                onSelect={onSelect}
-                onChange={onChange}
-            >
-                {options.map((el) =>
-                    <Option key={el.key}>
-                        {el.value}
-                        {flag(el.country)}
-                    </Option>
-                )}
-            </AutoComplete>
-            <br />
-            <br />
-        </>
-    )
-}
-
-export default SearchBar
+export default SearchBar;
